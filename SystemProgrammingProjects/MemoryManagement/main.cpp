@@ -38,9 +38,20 @@ void PrintFrames(int frames[][4])
 }
 
 
-int SearchFrames(int frames[][4], int x)
+int SearchFrames(int frames[][4], int x, int replace)
 {
+	
+	for (int i = 0; i < 4; i++)
+	{	
+		if (frames[x][i] == replace)
+		{
+			return -1;
+			break;
+			
+		}
+	}
 
+	
 
 
 }
@@ -58,7 +69,7 @@ int main()
 	{
 		for (int j = 0; j < ARRAY_SIZEY; j++)
 		{
-			Frames[i][j] = 0;
+			Frames[i][j] = -1;
 		}
 	}
 
@@ -81,11 +92,11 @@ int main()
 		
 
 	//This block secures an input from the user and keeps asking until the input is an integer
-			cout << "\n\nPlease enter a page request as an integer: ";
+			cout << "\n\nPlease enter a page request as a positive integer: ";
 			cin >> input;
-			while (cin.fail())
+			while (cin.fail() || input < 0)
 			{
-				cout << "Please enter an integer: \n";
+				cout << "Please enter a positive integer: \n";
 				cin.clear();
 				cin.ignore(256, '\n');
 				cin >> input;
@@ -96,10 +107,17 @@ int main()
 //We have the input. Now it's time to search through the frames to decide which number to replace
 		
 		
-			y = SearchFrames(Frames, count);//call function to search for  which row to swap
+			y = SearchFrames(Frames, count, input);//call function to search for  which row to swap
 
-			Frames[count][y] = input; // swap it
-
+			if (y = -1)
+			{
+				cout << "The number already exists in this row. No swap needed\n\n";
+				PrintFrames(Frames);
+			}
+			else
+			{
+				Frames[count][y] = input; // swap it
+			}
 		
 		
 
