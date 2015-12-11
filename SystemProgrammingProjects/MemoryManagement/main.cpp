@@ -21,25 +21,16 @@ using namespace std;
 #define ARRAY_SIZEY 4
 
 
-void PrintFrames(int frames[][4])
+void PrintFrames(int frames[10][4])
 {
 
-	cout << "Here are the frames!\n\n";
-
-	for (int i = 0; i < ARRAY_SIZEY; i++)
-	{
-		for (int j = 0; j < ARRAY_SIZEX; j++)
-		{
-			cout << frames[i][j] << "\t";
-		}
-		cout << "\n";
-	}
+	
 
 
 }
 
 
-int SearchFrames(int frames[][4], int x, int replace, int first)
+int SearchFrames(int frames[10][4], int x, int replace, int first)
 {
 	
 	for (int i = 0; i < 4; i++)
@@ -52,7 +43,7 @@ int SearchFrames(int frames[][4], int x, int replace, int first)
 		}
 		if (frames[x][i] == -1)
 		{
-			return i;
+			return first;
 			break;
 		}
 		
@@ -100,7 +91,16 @@ int main()
 
 	cout << "Hello! We are going to do some FIFO! Remember that -1 means EMPTY\n\n";
 
-	PrintFrames(Frames);
+	cout << "Here are the frames!\n\n";
+
+	for (int i = 0; i < ARRAY_SIZEY; i++)
+	{
+		for (int j = 0; j < ARRAY_SIZEX; j++)
+		{
+			cout << Frames[i][j] << "\t";
+		}
+		cout << "\n";
+	}
 
 
 	do{//repeat until 10 numbers are used
@@ -133,23 +133,41 @@ int main()
 			{
 			case -1:
 				cout << "The number already exists in this row. No entry needed\n\n";
-				PrintFrames(Frames);
+				cout << "Here are the frames!\n\n";
+
+				for (int i = 0; i < ARRAY_SIZEY; i++)
+				{
+					for (int j = 0; j < ARRAY_SIZEX; j++)
+					{
+						cout << Frames[i][j] << "\t";
+					}
+					cout << "\n";
+				}
 				count++;
 				break;
-			case -2:
+/*			case -2:
 				cout << "Empty space found. No replacement needed\n\n";
-				Frames[count][y] = input;
+				Frames[count][firstReplace.front()] = input;
 				firstReplace.push(y);//push y onto queue
 				firstReplace.pop();//remove the first
 				PrintFrames(Frames);
 				count++;
-				break;
+	*/			break;
 			default:
 				Frames[count][y] = input;
 				cout << "No space found. Replacing the frame that was entered first\n\n";
 				firstReplace.push(y);//push y onto queue
 				firstReplace.pop();//remove the first.
-				PrintFrames(Frames);
+				cout << "Here are the frames!\n\n";
+
+				for (int i = 0; i < ARRAY_SIZEY; i++)
+				{
+					for (int j = 0; j < ARRAY_SIZEX; j++)
+					{
+						cout << Frames[i][j] << "\t";
+					}
+					cout << "\n";
+				}
 				count++;
 				break;
 			}
