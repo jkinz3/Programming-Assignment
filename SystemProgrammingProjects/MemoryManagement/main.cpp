@@ -38,7 +38,7 @@ void PrintFrames(int frames[][4])
 }
 
 
-int SearchFrames(int frames[][4], int x, int replace)
+int SearchFrames(int frames[][4], int x, int replace, int temp)
 {
 	
 	for (int i = 0; i < 4; i++)
@@ -47,7 +47,11 @@ int SearchFrames(int frames[][4], int x, int replace)
 		{
 			return -1;
 			break;
-			
+		}
+		if (frames[x][y] == -1)
+		{
+			return -2;
+			break;
 		}
 	}
 
@@ -63,6 +67,16 @@ int SearchFrames(int frames[][4], int x, int replace)
 int main()
 {
 	
+	int again = 0; //test for input to enter multiple values
+
+	int count = 0;//keep count of the number of inputs. this will decided which column to edit
+
+	int input; //catch user input
+
+	int y; //the Y of each row to swap
+
+	int temp; //keeps track of the Y that was entered first
+
 	int Frames[10][4];//the frames to be replaced
 
 	for (int i = 0; i < ARRAY_SIZEX; i++)
@@ -75,13 +89,7 @@ int main()
 
 
 
-	int again = 0; //test for input to enter multiple values
 
-	int count = 0;//keep count of the number of inputs. this will decided which column to edit
-
-	int input; //catch user input
-
-	int y; //the Y of each row to swap
 
 	do{
 
@@ -109,14 +117,25 @@ int main()
 		
 			y = SearchFrames(Frames, count, input);//call function to search for  which row to swap
 
-			if (y = -1)
+			
+
+			switch (y)
 			{
-				cout << "The number already exists in this row. No swap needed\n\n";
+			case -1:
+				cout << "The number already exists in this row. No entry needed\n\n";
 				PrintFrames(Frames);
-			}
-			else
-			{
-				Frames[count][y] = input; // swap it
+				break;
+			case -2:
+				cout << "Empty space found. No replacement needed\n\n";
+				PrintFrames(Frames);
+				break;
+			default:
+				Frames[count][y] = input;
+				cout << "No space found. Replacing the frame that was entered first\n\n";
+				PrintFrames(Frames);
+				break;
+
+
 			}
 		
 		
