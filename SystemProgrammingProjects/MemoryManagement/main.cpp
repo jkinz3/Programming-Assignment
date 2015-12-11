@@ -23,8 +23,16 @@ using namespace std;
 
 void PrintFrames(int frames[10][4])
 {
+	cout << "Here are the frames!\n\n";
 
-	
+	for (int i = 0; i < ARRAY_SIZEY; i++)
+	{
+		for (int j = 0; j < ARRAY_SIZEX; j++)
+		{
+			cout << frames[i][j] << "\t";
+		}
+		cout << "\n";
+	}
 
 
 }
@@ -33,8 +41,14 @@ void PrintFrames(int frames[10][4])
 int SearchFrames(int frames[10][4], int x, int replace, int first)
 {
 	
+	
+
 	for (int i = 0; i < 4; i++)
-	{	
+	{
+
+
+		
+
 		if (frames[x][i] == replace)
 		{
 			return -1;
@@ -43,7 +57,7 @@ int SearchFrames(int frames[10][4], int x, int replace, int first)
 		}
 		if (frames[x][i] == -1)
 		{
-			return first;
+			return i;
 			break;
 		}
 		
@@ -89,19 +103,10 @@ int main()
 
 
 
-	cout << "Hello! We are going to do some FIFO! Remember that -1 means EMPTY\n\n";
+	cout << "Hello! We are going to do some FIFO! Remember that -1 means Empty:\n\n";
 
-	cout << "Here are the frames!\n\n";
-
-	for (int i = 0; i < ARRAY_SIZEY; i++)
-	{
-		for (int j = 0; j < ARRAY_SIZEX; j++)
-		{
-			cout << Frames[i][j] << "\t";
-		}
-		cout << "\n";
-	}
-
+	
+	PrintFrames(Frames);
 
 	do{//repeat until 10 numbers are used
 
@@ -123,7 +128,15 @@ int main()
 
 		
 //We have the input. Now it's time to search through the frames to decide which number to replace
+			
+			
+			
+			Frames[count][0] = Frames[count+1][0];
+			Frames[count][1] = Frames[count+1][1];
+			Frames[count][2] = Frames[count+1][2];
+			Frames[count][3] = Frames[count+1][3];
 		
+			
 		
 			y = SearchFrames(Frames, count, input, firstReplace.front());//call function to search for  which row to swap
 
@@ -135,14 +148,7 @@ int main()
 				cout << "The number already exists in this row. No entry needed\n\n";
 				cout << "Here are the frames!\n\n";
 
-				for (int i = 0; i < ARRAY_SIZEY; i++)
-				{
-					for (int j = 0; j < ARRAY_SIZEX; j++)
-					{
-						cout << Frames[i][j] << "\t";
-					}
-					cout << "\n";
-				}
+				PrintFrames(Frames);
 				count++;
 				break;
 /*			case -2:
@@ -159,15 +165,7 @@ int main()
 				firstReplace.push(y);//push y onto queue
 				firstReplace.pop();//remove the first.
 				cout << "Here are the frames!\n\n";
-
-				for (int i = 0; i < ARRAY_SIZEY; i++)
-				{
-					for (int j = 0; j < ARRAY_SIZEX; j++)
-					{
-						cout << Frames[i][j] << "\t";
-					}
-					cout << "\n";
-				}
+				PrintFrames(Frames);
 				count++;
 				break;
 			}
