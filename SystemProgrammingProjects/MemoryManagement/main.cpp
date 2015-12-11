@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include <random>
-
+#include <algorithm>
+#include <queue>
 /*
 This program will use the FIFO algorithm to mimic page replacement
 
@@ -38,7 +39,7 @@ void PrintFrames(int frames[][4])
 }
 
 
-int SearchFrames(int frames[][4], int x, int replace, int temp)
+int SearchFrames(int frames[][4], int x, int replace)
 {
 	
 	for (int i = 0; i < 4; i++)
@@ -50,15 +51,23 @@ int SearchFrames(int frames[][4], int x, int replace, int temp)
 		}
 		if (frames[x][y] == -1)
 		{
-			return -2;
+			return i;
 			break;
 		}
+		else
+		{
+
+		}
+
 	}
+
+
 
 	
 
 
 }
+
 
 
 
@@ -75,7 +84,8 @@ int main()
 
 	int y; //the Y of each row to swap
 
-	int temp; //keeps track of the Y that was entered first
+	queue<int> firstReplace; //keeps track of which rows were replaced
+	firstReplace.push(0); //first replacement will be 0 by default so this will get the algorithm started.
 
 	int Frames[10][4];//the frames to be replaced
 
@@ -91,7 +101,7 @@ int main()
 
 
 
-	do{
+	do{//repeat until 10 numbers are used
 
 		cout << "Hello! We are going to do some FIFO!\n\n";
 
@@ -127,11 +137,13 @@ int main()
 				break;
 			case -2:
 				cout << "Empty space found. No replacement needed\n\n";
+				firstReplace.push(y);
 				PrintFrames(Frames);
 				break;
 			default:
 				Frames[count][y] = input;
 				cout << "No space found. Replacing the frame that was entered first\n\n";
+				firstReplace.push(y);
 				PrintFrames(Frames);
 				break;
 
