@@ -3,7 +3,6 @@
 //2015
 
 #include <iostream>
-#include <random>
 #include <algorithm>
 #include <queue>
 /*
@@ -91,6 +90,8 @@ int main()
 
 	int count = 0;//keep count of the number of inputs. this will decided which column to edit
 
+	int collisions = 0;
+
 	int input; //catch user input
 
 	int y; //the Y of each row to swap
@@ -150,25 +151,19 @@ int main()
 			{
 			case -1:
 				cout << "The number already exists in this row. No entry needed\n\n";
-				cout << "Here are the frames!\n\n";
-
 				PrintFrames(Frames);
 				count++;
 				break;
-/*			case -2:
-				cout << "Empty space found. No replacement needed\n\n";
-				Frames[count][firstReplace.front()] = input;
-				firstReplace.push(y);//push y onto queue
-				firstReplace.pop();//remove the first
-				PrintFrames(Frames);
-				count++;
-	*/			break;
 			default:
 				Frames[y][count] = input;
 				cout << "Replacing the frame that was entered first\n\n";
+				collisions++;
+				
+				if (firstReplace.size() == 4)
+				{
+					firstReplace.pop();//remove the first.
+				}
 				firstReplace.push(y);//push y onto queue
-				firstReplace.pop();//remove the first.
-				cout << "Here are the frames!\n\n";
 				PrintFrames(Frames);
 				count++;
 				break;
@@ -176,7 +171,8 @@ int main()
 		
 			if (count == 10)
 			{
-				cout << "\n\n\nYou are done! Thank you!\n\n";
+				cout << "\n\n\nYou are done!\n" << "Number of collisions: " << collisions << endl;
+				cout << "Thank you!";
 			}
 	}while (count < 11);
 	
