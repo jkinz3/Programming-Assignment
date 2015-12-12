@@ -21,7 +21,7 @@ using namespace std;
 #define ARRAY_SIZEY 4
 
 
-void PrintFrames(int frames[10][4])
+void PrintFrames(int frames[ARRAY_SIZEY][ARRAY_SIZEX])
 {
 	cout << "Here are the frames!\n\n";
 
@@ -38,9 +38,18 @@ void PrintFrames(int frames[10][4])
 }
 
 
-int SearchFrames(int frames[10][4], int x, int replace, int first)
+int SearchFrames(int frames[ARRAY_SIZEY][ARRAY_SIZEX], int x, int replace, int first)
 {
 	
+	if (x > 0)
+	{
+
+		frames[0][x] = frames[0][x - 1];
+		frames[1][x] = frames[1][x - 1];
+		frames[2][x] = frames[2][x - 1];
+		frames[3][x] = frames[3][x - 1];
+	}
+
 	
 
 	for (int i = 0; i < 4; i++)
@@ -49,13 +58,13 @@ int SearchFrames(int frames[10][4], int x, int replace, int first)
 
 		
 
-		if (frames[x][i] == replace)
+		if (frames[i][x] == replace)
 		{
 			return -1;
 			break;
 			
 		}
-		if (frames[x][i] == -1)
+		if (frames[i][x] == -1)
 		{
 			return i;
 			break;
@@ -91,11 +100,11 @@ int main()
 	queue<int> firstReplace; //keeps track of which rows were replaced
 	firstReplace.push(0); //first replacement will be 0 by default so this will get the algorithm started.
 
-	int Frames[ARRAY_SIZEX][ARRAY_SIZEY];//the frames to be replaced
+	int Frames[ARRAY_SIZEY][ARRAY_SIZEX];//the frames to be replaced
 
-	for (int i = 0; i < ARRAY_SIZEX; i++)
+	for (int i = 0; i < ARRAY_SIZEY; i++)
 	{
-		for (int j = 0; j < ARRAY_SIZEY; j++)
+		for (int j = 0; j < ARRAY_SIZEX; j++)
 		{
 			Frames[i][j] = -1;
 		}
@@ -131,11 +140,6 @@ int main()
 			
 			
 			
-			Frames[count][0] = Frames[count+1][0];
-			Frames[count][1] = Frames[count+1][1];
-			Frames[count][2] = Frames[count+1][2];
-			Frames[count][3] = Frames[count+1][3];
-		
 			
 		
 			y = SearchFrames(Frames, count, input, firstReplace.front());//call function to search for  which row to swap
@@ -160,8 +164,8 @@ int main()
 				count++;
 	*/			break;
 			default:
-				Frames[count][y] = input;
-				cout << "No space found. Replacing the frame that was entered first\n\n";
+				Frames[y][count] = input;
+				cout << "Replacing the frame that was entered first\n\n";
 				firstReplace.push(y);//push y onto queue
 				firstReplace.pop();//remove the first.
 				cout << "Here are the frames!\n\n";
